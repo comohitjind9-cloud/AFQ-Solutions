@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AFQ Solutions – Finance & Accounting Community</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0F1F3D;
+    --navy-mid: #1A3260;
+    --teal: #00C2CB;
+    --teal-light: #E0F9FA;
+    --slate-bg: #F0F4F8;
+    --white: #FFFFFF;
+    --text: #1E293B;
+    --text-muted: #64748B;
+    --border: #CBD5E1;
+    --success: #10B981;
+    --warning: #F59E0B;
+    --danger: #EF4444;
+    --radius: 10px;
+    --shadow: 0 2px 12px rgba(15,31,61,0.10);
+    --shadow-lg: 0 8px 32px rgba(15,31,61,0.16);
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--slate-bg);
+    color: var(--text);
+    min-height: 100vh;
+    font-size: 14px;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--navy);
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.25);
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .brand-logo {
+    background: var(--teal);
+    color: var(--navy);
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    font-weight: 700;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: -1px;
+  }
+
+  .brand-text {
+    font-family: 'Playfair Display', serif;
+    color: var(--white);
+    font-size: 18px;
+    letter-spacing: 0.3px;
+  }
+
+  .brand-text span { color: var(--teal); }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 7px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.18s ease;
+  }
+
+  .btn-primary { background: var(--teal); color: var(--navy); }
+  .btn-primary:hover { background: #00adb5; transform: translateY(-1px); }
+  .btn-ghost { background: transparent; color: var(--white); border: 1.5px solid rgba(255,255,255,0.25); }
+  .btn-ghost:hover { background: rgba(255,255,255,0.08); }
+  .btn-sm { padding: 6px 12px; font-size: 12px; }
+  .btn-outline { background: transparent; color: var(--navy); border: 1.5px solid var(--border); }
+  .btn-outline:hover { border-color: var(--teal); color: var(--teal); }
+  .btn-danger { background: var(--danger); color: white; }
+  .btn-danger:hover { background: #dc2626; }
+
+  /* ── LAYOUT ── */
+  .layout {
+    display: grid;
+    grid-template-columns: 220px 1fr 260px;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px 16px;
+  }
+
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+    .sidebar-left, .sidebar-right { display: none; }
+  }
+
+  /* ── SIDEBAR LEFT ── */
+  .sidebar-left { display: flex; flex-direction: column; gap: 6px; }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    color: var(--text-muted);
+    transition: all 0.15s;
+    font-size: 13.5px;
+  }
+
+  .nav-item:hover { background: var(--white); color: var(--navy); }
+  .nav-item.active { background: var(--navy); color: var(--white); }
+  .nav-item .icon { font-size: 16px; width: 20px; text-align: center; }
+
+  .nav-section-title {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding: 14px 14px 4px;
+  }
+
+  /* ── MAIN FEED ── */
+  .main { display: flex; flex-direction: column; gap: 16px; }
+
+  /* Ask box */
+  .ask-box {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 18px;
+    border: 1.5px solid transparent;
+    transition: border-color 0.2s;
+  }
+  .ask-box:focus-within { border-color: var(--teal); }
+
+  .ask-box-top {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--navy), var(--teal));
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 13px;
+    flex-shrink: 0;
+  }
+
+  .ask-input {
+    flex: 1;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: var(--text);
+    resize: none;
+    outline: none;
+    transition: border-color 0.18s;
+    min-height: 70px;
+  }
+  .ask-input:focus { border-color: var(--teal); }
+  .ask-input::placeholder { color: var(--text-muted); }
+
+  .ask-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .ask-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .tag-select, .type-select {
+    border: 1.5px solid var(--border);
+    border-radius: 7px;
+    padding: 6px 10px;
+    font-size: 12px;
+    font-family: 'Inter', sans-serif;
+    color: var(--text);
+    background: var(--white);
+    cursor: pointer;
+    outline: none;
+  }
+  .tag-select:focus, .type-select:focus { border-color: var(--teal); }
+
+  .attach-btn {
+    background: none;
+    border: 1.5px solid var(--border);
+    border-radius: 7px;
+    padding: 6px 10px;
+    cursor: pointer;
+    font-size: 12px;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.15s;
+  }
+  .attach-btn:hover { border-color: var(--teal); color: var(--teal); }
+  #file-input { display: none; }
+
+  /* Filter bar */
+  .filter-bar {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .filter-chip {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1.5px solid var(--border);
+    background: var(--white);
+    color: var(--text-muted);
+    transition: all 0.15s;
+  }
+  .filter-chip:hover { border-color: var(--teal); color: var(--teal); }
+  .filter-chip.active { background: var(--navy); color: white; border-color: var(--navy); }
+
+  /* ── POST CARD ── */
+  .post-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 18px;
+    transition: box-shadow 0.18s;
+    border: 1.5px solid transparent;
+  }
+  .post-card:hover { box-shadow: var(--shadow-lg); border-color: var(--teal-light); }
+
+  .post-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+
+  .post-meta {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+  }
+
+  .post-author {
+    font-weight: 600;
+    font-size: 13.5px;
+    color: var(--navy);
+  }
+
+  .post-time { font-size: 11.5px; color: var(--text-muted); }
+
+  .post-badge {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .badge-question { background: #EFF6FF; color: #3B82F6; }
+  .badge-solution { background: #ECFDF5; color: var(--success); }
+  .badge-discussion { background: #FEF3C7; color: #D97706; }
+  .badge-document { background: #F5F3FF; color: #7C3AED; }
+
+  .post-category {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+    background: var(--teal-light);
+    color: #0891B2;
+  }
+
+  .post-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+
+  .post-body {
+    font-size: 13.5px;
+    color: var(--text);
+    line-height: 1.65;
+    margin-bottom: 12px;
+  }
+
+  .post-attachment {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--slate-bg);
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    transition: border-color 0.15s;
+  }
+  .post-attachment:hover { border-color: var(--teal); }
+  .post-attachment .file-icon { font-size: 20px; }
+  .post-attachment .file-info { flex: 1; }
+  .post-attachment .file-name { font-size: 13px; font-weight: 600; color: var(--navy); }
+  .post-attachment .file-size { font-size: 11px; color: var(--text-muted); }
+
+  .post-footer {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding-top: 10px;
+    border-top: 1px solid var(--slate-bg);
+  }
+
+  .action-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 12.5px;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: all 0.15s;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+  }
+  .action-btn:hover { background: var(--slate-bg); color: var(--navy); }
+  .action-btn.liked { color: #EF4444; }
+  .action-btn.bookmarked { color: var(--warning); }
+
+  /* Reply section */
+  .replies-section {
+    margin-top: 14px;
+    border-top: 1px solid var(--slate-bg);
+    padding-top: 12px;
+    display: none;
+  }
+  .replies-section.open { display: block; }
+
+  .reply-item {
+    display: flex;
+    gap: 9px;
+    margin-bottom: 12px;
+  }
+
+  .reply-content {
+    flex: 1;
+    background: var(--slate-bg);
+    border-radius: 8px;
+    padding: 10px 13px;
+  }
+
+  .reply-author {
+    font-weight: 600;
+    font-size: 12.5px;
+    color: var(--navy);
+    margin-bottom: 3px;
+  }
+
+  .reply-text { font-size: 13px; color: var(--text); line-height: 1.55; }
+
+  .reply-input-row {
+    display: flex;
+    gap: 9px;
+    margin-top: 10px;
+  }
+
+  .reply-input {
+    flex: 1;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.18s;
+  }
+  .reply-input:focus { border-color: var(--teal); }
+
+  /* ── SIDEBAR RIGHT ── */
+  .sidebar-right { display: flex; flex-direction: column; gap: 14px; }
+
+  .widget {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 16px;
+  }
+
+  .widget-title {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .stat-box {
+    background: var(--slate-bg);
+    border-radius: 8px;
+    padding: 12px;
+    text-align: center;
+  }
+  .stat-num {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--navy);
+    font-family: 'Playfair Display', serif;
+    line-height: 1;
+  }
+  .stat-label { font-size: 10px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; margin-top: 3px; }
+
+  .member-item {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin-bottom: 10px;
+  }
+  .member-info { flex: 1; }
+  .member-name { font-size: 13px; font-weight: 600; color: var(--navy); }
+  .member-role { font-size: 11px; color: var(--text-muted); }
+
+  .tag-cloud { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag-pill {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 20px;
+    border: 1.5px solid var(--border);
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .tag-pill:hover { border-color: var(--teal); color: var(--teal); background: var(--teal-light); }
+
+  /* Modal */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15,31,61,0.6);
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(3px);
+    display: none;
+  }
+  .modal-overlay.open { display: flex; }
+
+  .modal {
+    background: var(--white);
+    border-radius: 14px;
+    padding: 28px;
+    width: 420px;
+    max-width: 95vw;
+    box-shadow: var(--shadow-lg);
+  }
+
+  .modal-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+  .modal-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 20px; }
+
+  .form-group { margin-bottom: 14px; }
+  .form-label { font-size: 12px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px; display: block; }
+  .form-input, .form-select {
+    width: 100%;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 9px 13px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.18s;
+    background: var(--white);
+  }
+  .form-input:focus, .form-select:focus { border-color: var(--teal); }
+
+  .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; }
+
+  /* Toast */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--navy);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 13.5px;
+    font-weight: 500;
+    z-index: 999;
+    transform: translateY(80px);
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    box-shadow: var(--shadow-lg);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .toast.show { transform: translateY(0); opacity: 1; }
+  .toast.success { border-left: 4px solid var(--teal); }
+
+  /* Search bar */
+  .search-bar {
+    background: rgba(255,255,255,0.1);
+    border: 1.5px solid rgba(255,255,255,0.15);
+    border-radius: 8px;
+    padding: 7px 14px;
+    color: white;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    outline: none;
+    width: 200px;
+    transition: all 0.2s;
+  }
+  .search-bar:focus { background: rgba(255,255,255,0.15); width: 240px; border-color: var(--teal); }
+  .search-bar::placeholder { color: rgba(255,255,255,0.45); }
+
+  /* Empty state */
+  .empty-state { text-align: center; padding: 40px 20px; color: var(--text-muted); }
+  .empty-state .empty-icon { font-size: 40px; margin-bottom: 12px; }
+  .empty-state h3 { font-size: 16px; color: var(--navy); margin-bottom: 6px; }
+  .empty-state p { font-size: 13px; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="brand">
+    <div class="brand-logo">AFQ</div>
+    <span class="brand-text">AFQ <span>Solutions</span></span>
+  </div>
+  <input class="search-bar" type="text" placeholder="🔍  Search posts, docs…" id="searchInput" oninput="filterSearch()">
+  <div class="header-actions">
+    <button class="btn btn-ghost btn-sm" onclick="openModal('loginModal')">Sign In</button>
+    <button class="btn btn-primary btn-sm" onclick="openModal('joinModal')">Join Community</button>
+  </div>
+</header>
+
+<!-- MAIN LAYOUT -->
+<div class="layout">
+
+  <!-- LEFT SIDEBAR -->
+  <aside class="sidebar-left">
+    <div class="nav-item active" onclick="setFilter('all', this)"><span class="icon">🏠</span> Home Feed</div>
+    <div class="nav-item" onclick="setFilter('question', this)"><span class="icon">❓</span> Questions</div>
+    <div class="nav-item" onclick="setFilter('solution', this)"><span class="icon">✅</span> Solutions</div>
+    <div class="nav-item" onclick="setFilter('document', this)"><span class="icon">📄</span> Documents</div>
+    <div class="nav-item" onclick="setFilter('discussion', this)"><span class="icon">💬</span> Discussions</div>
+    <div class="nav-section-title">Topics</div>
+    <div class="nav-item" onclick="setTagFilter('TDS')"><span class="icon">📌</span> TDS / TCS</div>
+    <div class="nav-item" onclick="setTagFilter('GST')"><span class="icon">📌</span> GST</div>
+    <div class="nav-item" onclick="setTagFilter('MIS')"><span class="icon">📌</span> MIS Reporting</div>
+    <div class="nav-item" onclick="setTagFilter('IFRS')"><span class="icon">📌</span> IFRS / Ind AS</div>
+    <div class="nav-item" onclick="setTagFilter('Audit')"><span class="icon">📌</span> Audit</div>
+    <div class="nav-item" onclick="setTagFilter('Payroll')"><span class="icon">📌</span> Payroll</div>
+    <div class="nav-section-title">My Space</div>
+    <div class="nav-item" onclick="showToast('📑 Your saved posts', 'success')"><span class="icon">🔖</span> Saved Posts</div>
+    <div class="nav-item" onclick="showToast('🧑‍💼 Profile coming soon!', 'success')"><span class="icon">👤</span> My Profile</div>
+  </aside>
+
+  <!-- MAIN FEED -->
+  <main class="main">
+
+    <!-- Ask Box -->
+    <div class="ask-box">
+      <div class="ask-box-top">
+        <div class="avatar" id="myAvatar">MK</div>
+        <textarea class="ask-input" id="postContent" placeholder="Ask a question, share a solution, or start a discussion on any finance & accounting topic…" rows="3"></textarea>
+      </div>
+      <div class="ask-bottom">
+        <div class="ask-meta">
+          <select class="type-select" id="postType">
+            <option value="question">❓ Question</option>
+            <option value="solution">✅ Solution / Tip</option>
+            <option value="discussion">💬 Discussion</option>
+            <option value="document">📄 Document Share</option>
+          </select>
+          <select class="tag-select" id="postTag">
+            <option value="General">General</option>
+            <option value="TDS">TDS / TCS</option>
+            <option value="GST">GST</option>
+            <option value="MIS">MIS Reporting</option>
+            <option value="IFRS">IFRS / Ind AS</option>
+            <option value="Audit">Audit</option>
+            <option value="Payroll">Payroll</option>
+            <option value="Tax Planning">Tax Planning</option>
+            <option value="Companies Act">Companies Act</option>
+            <option value="International Tax">International Tax</option>
+          </select>
+          <button class="attach-btn" onclick="document.getElementById('file-input').click()">📎 Attach File</button>
+          <input type="file" id="file-input" accept=".pdf,.xlsx,.docx,.csv,.xls" onchange="handleFile(event)">
+          <span id="attachedFileName" style="font-size:12px;color:var(--teal);font-weight:600;display:none;"></span>
+        </div>
+        <button class="btn btn-primary" onclick="submitPost()">Post ➜</button>
+      </div>
+    </div>
+
+    <!-- Filter Bar -->
+    <div class="filter-bar">
+      <span style="font-size:12px;font-weight:600;color:var(--text-muted);">Filter:</span>
+      <div class="filter-chip active" data-filter="all" onclick="filterChip(this, 'all')">All</div>
+      <div class="filter-chip" data-filter="question" onclick="filterChip(this, 'question')">❓ Questions</div>
+      <div class="filter-chip" data-filter="solution" onclick="filterChip(this, 'solution')">✅ Solutions</div>
+      <div class="filter-chip" data-filter="discussion" onclick="filterChip(this, 'discussion')">💬 Discussions</div>
+      <div class="filter-chip" data-filter="document" onclick="filterChip(this, 'document')">📄 Documents</div>
+    </div>
+
+    <!-- Posts Feed -->
+    <div id="postsContainer"></div>
+
+  </main>
+
+  <!-- RIGHT SIDEBAR -->
+  <aside class="sidebar-right">
+
+    <div class="widget">
+      <div class="widget-title">📊 Community Stats</div>
+      <div class="stats-grid">
+        <div class="stat-box"><div class="stat-num" id="statPosts">0</div><div class="stat-label">Posts</div></div>
+        <div class="stat-box"><div class="stat-num">12</div><div class="stat-label">Members</div></div>
+        <div class="stat-box"><div class="stat-num" id="statDocs">0</div><div class="stat-label">Docs</div></div>
+        <div class="stat-box"><div class="stat-num" id="statReplies">0</div><div class="stat-label">Replies</div></div>
+      </div>
+    </div>
+
+    <div class="widget">
+      <div class="widget-title">👥 Top Members</div>
+      <div class="member-item">
+        <div class="avatar" style="width:32px;height:32px;font-size:11px;">MK</div>
+        <div class="member-info"><div class="member-name">Mohit Kumar</div><div class="member-role">Finance Manager · MNC</div></div>
+      </div>
+      <div class="member-item">
+        <div class="avatar" style="width:32px;height:32px;font-size:11px;background:linear-gradient(135deg,#7C3AED,#00C2CB);">AK</div>
+        <div class="member-info"><div class="member-name">Anushk Kapoor</div><div class="member-role">CA · Dhawan & Co.</div></div>
+      </div>
+      <div class="member-item">
+        <div class="avatar" style="width:32px;height:32px;font-size:11px;background:linear-gradient(135deg,#10B981,#0F1F3D);">RS</div>
+        <div class="member-info"><div class="member-name">Rohit Sharma</div><div class="member-role">Tax Consultant</div></div>
+      </div>
+    </div>
+
+    <div class="widget">
+      <div class="widget-title">🏷️ Hot Topics</div>
+      <div class="tag-cloud">
+        <div class="tag-pill" onclick="setTagFilter('TDS')">TDS</div>
+        <div class="tag-pill" onclick="setTagFilter('GST')">GST</div>
+        <div class="tag-pill" onclick="setTagFilter('MIS')">MIS</div>
+        <div class="tag-pill" onclick="setTagFilter('IFRS')">IFRS</div>
+        <div class="tag-pill" onclick="setTagFilter('Audit')">Audit</div>
+        <div class="tag-pill" onclick="setTagFilter('Payroll')">Payroll</div>
+        <div class="tag-pill" onclick="setTagFilter('Tax Planning')">Tax Planning</div>
+        <div class="tag-pill" onclick="setTagFilter('International Tax')">Intl. Tax</div>
+        <div class="tag-pill" onclick="setTagFilter('Companies Act')">Companies Act</div>
+      </div>
+    </div>
+
+    <div class="widget" style="background:var(--navy);color:white;">
+      <div class="widget-title" style="color:var(--teal);">🚀 About AFQ Solutions</div>
+      <p style="font-size:12.5px;line-height:1.65;color:rgba(255,255,255,0.8);">
+        A private community for finance & accounting professionals to share knowledge, resolve queries, and collaborate on documents. Built for CAs, CFOs, Finance Managers & Tax Experts.
+      </p>
+      <button class="btn btn-primary btn-sm" style="margin-top:12px;width:100%;justify-content:center;" onclick="openModal('joinModal')">Join Now →</button>
+    </div>
+
+  </aside>
+</div>
+
+<!-- JOIN MODAL -->
+<div class="modal-overlay" id="joinModal">
+  <div class="modal">
+    <div class="modal-title">Join AFQ Solutions</div>
+    <div class="modal-sub">Connect with finance & accounting professionals</div>
+    <div class="form-group">
+      <label class="form-label">Full Name</label>
+      <input class="form-input" id="joinName" type="text" placeholder="e.g. Mohit Kumar Jind">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Email</label>
+      <input class="form-input" id="joinEmail" type="email" placeholder="you@company.com">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Role / Designation</label>
+      <input class="form-input" id="joinRole" type="text" placeholder="e.g. Finance Manager, CA, CFO">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Primary Expertise</label>
+      <select class="form-select" id="joinExpertise">
+        <option>TDS / TCS</option>
+        <option>GST</option>
+        <option>Audit & Assurance</option>
+        <option>MIS / Reporting</option>
+        <option>IFRS / Ind AS</option>
+        <option>Tax Planning</option>
+        <option>Payroll</option>
+        <option>International Tax</option>
+        <option>Treasury / Finance</option>
+      </select>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="closeModal('joinModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="joinCommunity()">Join Community 🎉</button>
+    </div>
+  </div>
+</div>
+
+<!-- LOGIN MODAL -->
+<div class="modal-overlay" id="loginModal">
+  <div class="modal">
+    <div class="modal-title">Sign In</div>
+    <div class="modal-sub">Welcome back to AFQ Solutions</div>
+    <div class="form-group">
+      <label class="form-label">Email</label>
+      <input class="form-input" type="email" placeholder="you@company.com">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Password</label>
+      <input class="form-input" type="password" placeholder="••••••••">
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="closeModal('loginModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="closeModal('loginModal');showToast('✅ Signed in successfully!','success')">Sign In</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ── DATA STORE ──
+let posts = [
+  {
+    id: 1,
+    author: "Mohit Kumar",
+    avatar: "MK",
+    time: "2 hours ago",
+    type: "question",
+    tag: "TDS",
+    title: "Section 195 TDS on payment to foreign vendor — PAN not available",
+    body: "We have a Japanese vendor (Toyobo Corp.) with no Indian PAN. Form 27Q filing on TRACES is giving error for nil PAN. What is the correct TDS rate applicable and how to handle Form 27Q filing in this case? Any DTAA benefit possible without PAN?",
+    likes: 8,
+    liked: false,
+    bookmarked: false,
+    replies: [
+      { author: "Anushk Kapoor", avatar: "AK", text: "Without PAN, TDS must be deducted at 20% or treaty rate, whichever is higher as per Sec 206AA. For TRACES, use 'PANNOTAVBL' in the PAN field for Form 27Q. Also, Form 15CA/CB (or upcoming 145/146) will be required." },
+      { author: "Rohit Sharma", avatar: "RS", text: "Agree with CA Anushk. Also check if vendor has Tax Residency Certificate (TRC) — that's mandatory for DTAA benefit even without PAN. CBDT Circular 7/2013 is relevant here." }
+    ],
+    attachment: null
+  },
+  {
+    id: 2,
+    author: "Anushk Kapoor",
+    avatar: "AK",
+    time: "1 day ago",
+    type: "solution",
+    tag: "GST",
+    title: "How to handle GST on reverse charge for import of services — Practical guide",
+    body: "Under Section 5(3) of IGST Act, import of services where supplier is outside India and recipient is a registered person in India attracts RCM. ITC of same is available in the same month if used for business. Key: ensure correct place of supply determination under Sec 13.",
+    likes: 15,
+    liked: false,
+    bookmarked: false,
+    replies: [],
+    attachment: null
+  },
+  {
+    id: 3,
+    author: "Priya Nair",
+    avatar: "PN",
+    time: "2 days ago",
+    type: "document",
+    tag: "MIS",
+    title: "Monthly MIS Report Template — Manufacturing Company (Excel)",
+    body: "Sharing our MIS template which covers: P&L summary, cash flow, debtors/creditors aging, stock turnover, and KPI dashboard. Customised for manufacturing setup. Feel free to adapt.",
+    likes: 22,
+    liked: false,
+    bookmarked: true,
+    replies: [
+      { author: "Mohit Kumar", avatar: "MK", text: "Very useful template! We use a similar structure at Toyobo. I'd suggest adding a column for YTD actuals vs Budget variance %. Makes exec presentations much cleaner." }
+    ],
+    attachment: { name: "MIS_Template_Manufacturing_FY2627.xlsx", size: "245 KB", icon: "📊" }
+  },
+  {
+    id: 4,
+    author: "Vikas Sethi",
+    avatar: "VS",
+    time: "3 days ago",
+    type: "discussion",
+    tag: "IFRS",
+    title: "Ind AS 116 — Operating lease vs Finance lease classification for Indian MNCs",
+    body: "We are a subsidiary of a Japanese company and follow Ind AS. Our parent wants us to reclassify certain operating leases as finance leases under IFRS 16 for consolidation. What are the key practical challenges Indian finance teams face in this alignment?",
+    likes: 11,
+    liked: false,
+    bookmarked: false,
+    replies: [],
+    attachment: null
+  }
+];
+
+let attachedFile = null;
+let currentFilter = 'all';
+let currentTagFilter = null;
+let searchQuery = '';
+
+// ── RENDER ──
+function renderPosts() {
+  const container = document.getElementById('postsContainer');
+  let filtered = posts.filter(p => {
+    const matchFilter = currentFilter === 'all' || p.type === currentFilter;
+    const matchTag = !currentTagFilter || p.tag === currentTagFilter;
+    const matchSearch = !searchQuery ||
+      p.title.toLowerCase().includes(searchQuery) ||
+      p.body.toLowerCase().includes(searchQuery) ||
+      p.tag.toLowerCase().includes(searchQuery);
+    return matchFilter && matchTag && matchSearch;
+  });
+
+  if (filtered.length === 0) {
+    container.innerHTML = `<div class="empty-state"><div class="empty-icon">🔍</div><h3>No posts found</h3><p>Be the first to post on this topic!</p></div>`;
+    return;
+  }
+
+  container.innerHTML = filtered.map(p => `
+    <div class="post-card" id="post-${p.id}">
+      <div class="post-header">
+        <div class="post-meta">
+          <div class="avatar" style="width:36px;height:36px;font-size:12px;">${p.avatar}</div>
+          <div>
+            <div class="post-author">${p.author}</div>
+            <div class="post-time">${p.time}</div>
+          </div>
+          <span class="post-badge badge-${p.type}">${badgeLabel(p.type)}</span>
+        </div>
+        <span class="post-category">${p.tag}</span>
+      </div>
+      <div class="post-title">${p.title}</div>
+      <div class="post-body">${p.body}</div>
+      ${p.attachment ? `
+        <div class="post-attachment" onclick="showToast('📥 Downloading ${p.attachment.name}…','success')">
+          <span class="file-icon">${p.attachment.icon}</span>
+          <div class="file-info">
+            <div class="file-name">${p.attachment.name}</div>
+            <div class="file-size">${p.attachment.size}</div>
+          </div>
+          <span style="font-size:12px;color:var(--teal);font-weight:600;">⬇ Download</span>
+        </div>
+      ` : ''}
+      <div class="post-footer">
+        <button class="action-btn ${p.liked ? 'liked' : ''}" onclick="toggleLike(${p.id})">
+          ${p.liked ? '❤️' : '🤍'} ${p.likes}
+        </button>
+        <button class="action-btn" onclick="toggleReplies(${p.id})">
+          💬 ${p.replies.length} ${p.replies.length === 1 ? 'Reply' : 'Replies'}
+        </button>
+        <button class="action-btn ${p.bookmarked ? 'bookmarked' : ''}" onclick="toggleBookmark(${p.id})">
+          ${p.bookmarked ? '🔖' : '🏷️'} Save
+        </button>
+        <button class="action-btn" onclick="sharePost(${p.id})">↗ Share</button>
+      </div>
+      <div class="replies-section" id="replies-${p.id}">
+        ${p.replies.map(r => `
+          <div class="reply-item">
+            <div class="avatar" style="width:28px;height:28px;font-size:10px;">${r.avatar}</div>
+            <div class="reply-content">
+              <div class="reply-author">${r.author}</div>
+              <div class="reply-text">${r.text}</div>
+            </div>
+          </div>
+        `).join('')}
+        <div class="reply-input-row">
+          <input class="reply-input" id="replyInput-${p.id}" type="text" placeholder="Write a reply…" onkeydown="if(event.key==='Enter') addReply(${p.id})">
+          <button class="btn btn-primary btn-sm" onclick="addReply(${p.id})">Reply</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+
+  updateStats();
+}
+
+function badgeLabel(type) {
+  return { question: 'Question', solution: 'Solution', discussion: 'Discussion', document: 'Document' }[type] || type;
+}
+
+// ── INTERACTIONS ──
+function toggleLike(id) {
+  const p = posts.find(x => x.id === id);
+  p.liked = !p.liked;
+  p.likes += p.liked ? 1 : -1;
+  renderPosts();
+  openRepliesIfOpen(id);
+}
+
+function toggleBookmark(id) {
+  const p = posts.find(x => x.id === id);
+  p.bookmarked = !p.bookmarked;
+  renderPosts();
+  showToast(p.bookmarked ? '🔖 Post saved!' : 'Removed from saved', 'success');
+  openRepliesIfOpen(id);
+}
+
+function toggleReplies(id) {
+  const sec = document.getElementById(`replies-${id}`);
+  sec.classList.toggle('open');
+}
+
+function openRepliesIfOpen(id) {
+  // keep open state after re-render — skip for simplicity
+}
+
+function addReply(id) {
+  const input = document.getElementById(`replyInput-${id}`);
+  const text = input.value.trim();
+  if (!text) return;
+  const p = posts.find(x => x.id === id);
+  p.replies.push({ author: "Mohit Kumar", avatar: "MK", text });
+  renderPosts();
+  setTimeout(() => {
+    const sec = document.getElementById(`replies-${id}`);
+    if (sec) { sec.classList.add('open'); }
+  }, 10);
+  showToast('💬 Reply posted!', 'success');
+  updateStats();
+}
+
+function sharePost(id) {
+  const p = posts.find(x => x.id === id);
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(`[AFQ Solutions] ${p.title}`);
+    showToast('🔗 Post link copied!', 'success');
+  } else {
+    showToast('🔗 Link copied!', 'success');
+  }
+}
+
+// ── SUBMIT POST ──
+function submitPost() {
+  const content = document.getElementById('postContent').value.trim();
+  if (!content) { showToast('⚠️ Please write something first!', ''); return; }
+  const type = document.getElementById('postType').value;
+  const tag = document.getElementById('postTag').value;
+
+  // Generate title from first line or first 60 chars
+  const firstLine = content.split('\n')[0];
+  const title = firstLine.length > 70 ? firstLine.substring(0, 70) + '…' : firstLine;
+  const body = content.length > title.length ? content.substring(title.length).trim() : '';
+
+  const newPost = {
+    id: Date.now(),
+    author: "Mohit Kumar",
+    avatar: "MK",
+    time: "Just now",
+    type, tag, title,
+    body: body || content,
+    likes: 0, liked: false, bookmarked: false,
+    replies: [],
+    attachment: attachedFile ? { name: attachedFile.name, size: formatSize(attachedFile.size), icon: fileIcon(attachedFile.name) } : null
+  };
+
+  posts.unshift(newPost);
+  document.getElementById('postContent').value = '';
+  attachedFile = null;
+  document.getElementById('attachedFileName').style.display = 'none';
+  renderPosts();
+  showToast('✅ Post published successfully!', 'success');
+}
+
+function handleFile(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  attachedFile = file;
+  const label = document.getElementById('attachedFileName');
+  label.textContent = '📎 ' + file.name;
+  label.style.display = 'inline';
+}
+
+function fileIcon(name) {
+  if (name.endsWith('.pdf')) return '📕';
+  if (name.endsWith('.xlsx') || name.endsWith('.xls') || name.endsWith('.csv')) return '📊';
+  if (name.endsWith('.docx') || name.endsWith('.doc')) return '📝';
+  return '📄';
+}
+
+function formatSize(bytes) {
+  if (bytes < 1024) return bytes + ' B';
+  if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(0) + ' KB';
+  return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+}
+
+// ── FILTERS ──
+function filterChip(el, filter) {
+  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  currentFilter = filter;
+  currentTagFilter = null;
+  renderPosts();
+}
+
+function setFilter(filter, navEl) {
+  currentFilter = filter;
+  currentTagFilter = null;
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  navEl.classList.add('active');
+  renderPosts();
+}
+
+function setTagFilter(tag) {
+  currentTagFilter = currentTagFilter === tag ? null : tag;
+  currentFilter = 'all';
+  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+  document.querySelector('[data-filter="all"]').classList.add('active');
+  renderPosts();
+  showToast(`🏷️ Filtered by: ${tag}`, 'success');
+}
+
+function filterSearch() {
+  searchQuery = document.getElementById('searchInput').value.toLowerCase();
+  renderPosts();
+}
+
+// ── STATS ──
+function updateStats() {
+  document.getElementById('statPosts').textContent = posts.length;
+  document.getElementById('statDocs').textContent = posts.filter(p => p.attachment).length;
+  const totalReplies = posts.reduce((sum, p) => sum + p.replies.length, 0);
+  document.getElementById('statReplies').textContent = totalReplies;
+}
+
+// ── MODALS ──
+function openModal(id) { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+document.querySelectorAll('.modal-overlay').forEach(m => {
+  m.addEventListener('click', e => { if (e.target === m) m.classList.remove('open'); });
+});
+
+function joinCommunity() {
+  const name = document.getElementById('joinName').value.trim();
+  const email = document.getElementById('joinEmail').value.trim();
+  if (!name || !email) { showToast('⚠️ Please fill all fields', ''); return; }
+  closeModal('joinModal');
+  showToast(`🎉 Welcome to AFQ Solutions, ${name.split(' ')[0]}!`, 'success');
+  document.getElementById('myAvatar').textContent = name.split(' ').map(w => w[0]).join('').substring(0, 2).toUpperCase();
+}
+
+// ── TOAST ──
+function showToast(msg, type) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = `toast ${type} show`;
+  setTimeout(() => { t.className = 'toast'; }, 3000);
+}
+
+// ── INIT ──
+renderPosts();
+</script>
+</body>
+</html>
